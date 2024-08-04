@@ -4,16 +4,20 @@
 TARGET = main
 
 # Define the microcontroller
-MCU = atmega328p
+MCU = atmega1284p
 
 # Define the clock frequency
 F_CPU = 16000000UL
 
 # Source files
-SRC = src/main.c src/adc.c src/usart.c src/temperature.c
+SRC = src/*.c
+
+# AVR Libc dependencies
+INCLUDE_AVR = lib/avr
+INCLUDE_UTIL = lib/util
 
 # Compiler and linker flags
-CFLAGS = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Os -Wall -Wextra
+CFLAGS = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Os -Wall -Wextra -Werror  -I$(INCLUDE_AVR) -I$(INCLUDE_UTIL)
 LDFLAGS = -mmcu=$(MCU)
 
 # Output directory
@@ -22,13 +26,10 @@ BUILD_DIR = build
 # Tools
 CC = avr-gcc
 OBJCOPY = avr-objcopy
-AVRDUDE = avrdude
+HID = hiduploader.exe
 
-# AVRDUDE options
-AVRDUDE_MCU = m328p
-AVRDUDE_PROGRAMMER = arduino
-AVRDUDE_PORT = /dev/ttyUSB0
-AVRDUDE_BAUDRATE = 115200
+# HID options
+HID_MCU = atmega1284p
 
 # Output file names
 ELF = $(BUILD_DIR)/$(TARGET).elf
@@ -37,22 +38,22 @@ HEX = $(BUILD_DIR)/$(TARGET).hex
 # Default target
 all: $(HEX)
 
+# Build elf from source
+$(ELF): $(SRC)
+	$(CC) $(CFLAGS) $^ -o $@
+
 # Build hex from elf
 $(HEX): $(ELF)
 	$(OBJCOPY) -O ihex $< $@
 
-# Build elf from source
-$(ELF): $(SRC)
-	mkdir -p $(BUILD_DIR)
-	$(CC) $(CFLAGS) $^ -o $@
 
 # Clean up build directory
 clean:
-	rm -rf $(BUILD_DIR)
+	rm -rf $(BUILD_DIR)/*
 
 # Flash the microcontroller
 flash: $(HEX)
-	$(AVRDUDE) -c $(AVRDUDE_PROGRAMMER) -p $(AVRDUDE_MCU) -P $(AVRDUDE_PORT) -b $(AVRDUDE_BAUDRATE) -U flash:w:$<
+	$(HID) -mmcu=$(HID_MCU) -v -usb=0x2842,0x0001 "$(HEX)"
 
 # Phony targets
 .PHONY: all clean flash

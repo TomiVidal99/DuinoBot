@@ -9,9 +9,8 @@ Don't drink and drive!
 //*/
 ////////////////////////////////////////////////////////
 
-#define F_CPU 16000000UL
-#include <avr/io.h>
-#include "util/delay.h"
+#include "../lib/avr/io.h"
+#include "../lib/util/delay.h"
 
 int quickDistance(void)
 {

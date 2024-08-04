@@ -1,6 +1,9 @@
 {
     "files.associations": {
         "io.h": "c",
-        "iom328p.h": "c"
+        "iom328p.h": "c",
+        "delay.h": "c",
+        "hotwheels.h": "c",
+        "*.in": "c"
     }
 }

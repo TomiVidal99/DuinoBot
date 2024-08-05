@@ -6,8 +6,8 @@
 #endif
 
 // distancias que definen el comportanmiento de rotacion y velocidad
-#define MAX_DISTANCE 80
-#define MID_DISTANCE 50
+#define MAX_DISTANCE 60
+#define MID_DISTANCE 30
 #define MIN_DISTANCE 10
 
 // velocidades del motor
@@ -19,18 +19,16 @@
 #include "../include/HotWheels.h"
 #include "../include/theDistance.h"
 
-void found_wall_handler(); // callback de interrupción cuando se encuentra una pared
-
 int main(void)
 {
-    int distance = 0;
+    uint8_t distance = 0;
 
     onYourMarks(); // se inicializan los motores
 
     while (1)
     {
 
-        distance = quickDistance();
+        distance = quickDistance(); // se lee la distancia al proximo obstaculo
 
         if (distance > MAX_DISTANCE)
         {
@@ -39,14 +37,21 @@ int main(void)
         else if (distance < MID_DISTANCE && distance > MIN_DISTANCE)
         {
             straightForward(MID_MOTOR_POWER);
-            axisLTurn(MID_MOTOR_POWER - 10);
         }
-        else
+        else if (distance < MIN_DISTANCE)
         {
-            axisRTurn(100);
+
+            straightBack(MID_MOTOR_POWER);
+            _delay_ms(2000);
+
+            softStop();
+
+            axisLTurn(MID_MOTOR_POWER);
+            _delay_ms(1500);
+            softStop();
         }
 
-        _delay_ms(5);
+        _delay_ms(50);
     }
 
     return 0;

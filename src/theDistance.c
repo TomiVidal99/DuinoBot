@@ -12,7 +12,7 @@ Don't drink and drive!
 #include "../lib/avr/io.h"
 #include "../lib/util/delay.h"
 
-int quickDistance(void)
+uint8_t quickDistance(void)
 {
 	TCCR3A = 0x00;
 	unsigned int t = 0; // clear mem space
@@ -43,7 +43,7 @@ int quickDistance(void)
 
 	t |= ICR3;
 
-	return (((t) / 15) - 7);
+	return (uint8_t)(((t) / 15) - 7);
 }
 
 float fineDistance(void)

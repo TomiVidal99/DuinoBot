@@ -15,7 +15,7 @@ Don't drink and drive!
 #endif
 #include "../lib/util/delay.h"
 
-int quickDistance(void); // blocking function. Returns the distance in centimeters in an integer format.
+uint8_t quickDistance(void); // blocking function. Returns the distance in centimeters in an integer format.
 
 float fineDistance(void); // blocking function. Returns the distance in centimeters in a floating point format.
 

@@ -38,6 +38,8 @@ HEX = $(BUILD_DIR)/$(TARGET).hex
 # Default target
 all: $(HEX)
 
+	mkdir $(BUILD_DIR)
+
 # Build elf from source
 $(ELF): $(SRC)
 	$(CC) $(CFLAGS) $^ -o $@

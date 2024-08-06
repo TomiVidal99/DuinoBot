@@ -10,21 +10,25 @@ MCU = atmega1284p
 F_CPU = 16000000UL
 
 # Source files
-SRC = src/*.c
+SRC = 	src/*.c \
+		lib/**/*.c
 
 # AVR Libc dependencies
-INCLUDE_AVR = lib/avr
-INCLUDE_UTIL = lib/util
+INCLUDE_AVR = lib/avr/**/*
+INCLUDE_HOT_WHEELS = lib/HotWheels/**/*
+INCLUDE_THE_DISTANCE = lib/theDistance/**/*
+INCLUDE_DUINO_EYES = lib/DuinoEyes/**/*
 
 # Compiler and linker flags
-CFLAGS = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Os -Wall -Wextra -Werror  -I$(INCLUDE_AVR) -I$(INCLUDE_UTIL)
+# Considerar: -Werror -Wfatal-errors -Wall -Wextra
+CFLAGS = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Os -I$(INCLUDE_AVR) -I$(INCLUDE_HOT_WHEELS) -I$(INCLUDE_THE_DISTANCE) -I$(INCLUDE_DUINO_EYES)
 LDFLAGS = -mmcu=$(MCU)
 
 # Output directory
 BUILD_DIR = build
 
 # Tools
-CC = avr-gcc
+CC = "C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe"
 OBJCOPY = avr-objcopy
 HID = hiduploader.exe
 
@@ -36,9 +40,10 @@ ELF = $(BUILD_DIR)/$(TARGET).elf
 HEX = $(BUILD_DIR)/$(TARGET).hex
 
 # Default target
-all: $(HEX)
+all: $(BUILD_DIR) $(HEX)
 
-	mkdir $(BUILD_DIR)
+$(BUILD_DIR):
+	if not exist $(BUILD_DIR) mkdir $(BUILD_DIR)
 
 # Build elf from source
 $(ELF): $(SRC)
@@ -51,7 +56,7 @@ $(HEX): $(ELF)
 
 # Clean up build directory
 clean:
-	rm -rf $(BUILD_DIR)/*
+	if exist $(BUILD_DIR) del /Q $(BUILD_DIR)\*
 
 # Flash the microcontroller
 flash: $(HEX)

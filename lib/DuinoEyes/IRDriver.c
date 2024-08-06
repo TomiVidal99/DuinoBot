@@ -9,15 +9,15 @@
  *
  * ************************************************************************** */
 
-/** \file */
+/** \file IRDriver.c */
 
 /* =======================================================================
  * [INCLUDES]
  * =======================================================================
  */
 
-#include "../include/IRDriver.h"
-#include "../lib/avr/stdint.h"
+#include "IRDriver.h"
+#include <stdint.h>
 
 /* =======================================================================
  * [MACROS]
@@ -32,22 +32,23 @@
  * =======================================================================
  */
 
-void IRDriver_Init(volatile uint8_t *ddr, volatile uint8_t *port, uint8_t pin)
+void
+IRDriver_Init (volatile uint8_t *ddr, volatile uint8_t *port, uint8_t pin)
 {
-    *ddr &= ~MASK(pin); /* Configura el pin como entrada */
-    *port |= MASK(pin); /* Inicializo el puerto en alto para evitar estado de alta impedancia  */
+    *ddr &= ~MASK (pin); /* Configura el pin como entrada */
+    *port |= MASK (pin); /* Inicializo el puerto en alto para evitar estado de alta impedancia  */
 }
 
 uint8_t
-IRDriver_IsHigh(volatile uint8_t *port, uint8_t pin)
+IRDriver_IsHigh (volatile uint8_t *port, uint8_t pin)
 {
-    if ((*port & MASK(pin)) == MASK(pin))
+    if ((*port & MASK (pin)) == MASK (pin))
         return TRUE;
     return FALSE;
 }
 
 uint8_t
-IRDriver_IsLow(volatile uint8_t *port, uint8_t pin)
+IRDriver_IsLow (volatile uint8_t *port, uint8_t pin)
 {
-    return !IRDriver_IsHigh(port, pin);
+    return !IRDriver_IsHigh (port, pin);
 }

@@ -9,8 +9,8 @@ Don't drink and drive!
 //*/
 ////////////////////////////////////////////////////////
 
-#include "../lib/avr/io.h"
-#include "../lib/util/delay.h"
+#include "../avr/io.h"
+#include "../util/delay.h"
 
 uint8_t quickDistance(void)
 {

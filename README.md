@@ -18,7 +18,7 @@ Este error es causado por problemas de administración. Hay que abrir la termina
 ### Dependencias
 Se intentó incluir todas las dependencias en el proyecto, para que no haya necesidad de tener que instalar cosas extras, pero igualmente hacen falta algunas.
 - make (para poder compilar con el archivo Makefile)
-- avr-gcc (compilador para que haya intellisense en vscode)
+- avr-gcc (compilador para que haya intellisense en vscode y para poder compilar el .hex que se va a flashear en el micro)
 El resto de dependencias están contenidas dentro del proyecto.
 
 ### Algunos problemas que pueden ocurrir

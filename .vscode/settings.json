@@ -7,6 +7,7 @@
         "*.in": "c",
         "stdint.h": "c",
         "uart.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "duinoeyes.h": "c"
     }
 }

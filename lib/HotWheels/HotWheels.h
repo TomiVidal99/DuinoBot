@@ -9,11 +9,11 @@ Don't drink and drive!
 //*/
 ////////////////////////////////////////////////////////
 
-#include "../lib/avr/io.h"
+#include "../avr/io.h"
 #ifndef F_CPU
 #warning "Missing F_CPU definition"
 #endif
-#include "../lib/util/delay.h"
+#include "../util/delay.h"
 
 void onYourMarks(void); // setting up the timers. write to initialize, before invoking any function.
 

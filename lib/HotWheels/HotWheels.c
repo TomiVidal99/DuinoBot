@@ -9,9 +9,9 @@ Don't drink and drive!
 //*/
 ////////////////////////////////////////////////////////
 
-#include "../lib/avr/io.h"
-#include "../lib/util/delay.h"
-#include "../include/HotWheels.h"
+#include "../avr/io.h"
+#include "../util/delay.h"
+#include "HotWheels.h"
 
 void onYourMarks(void)
 {

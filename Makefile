@@ -15,13 +15,16 @@ SRC = 	src/*.c \
 
 # AVR Libc dependencies
 INCLUDE_AVR = lib/avr/**/*
+INCLUDE_IR_DRIVER = lib/DuinoEyes/**/*
 INCLUDE_HOT_WHEELS = lib/HotWheels/**/*
 INCLUDE_THE_DISTANCE = lib/theDistance/**/*
 INCLUDE_DUINO_EYES = lib/DuinoEyes/**/*
+INCLUDE_NEC_DECODER = lib/avr-ir-necdecoder/**/*
+INCLUDE_UART = lib/UART/**/*
 
 # Compiler and linker flags
 # Considerar: -Werror -Wfatal-errors -Wall -Wextra
-CFLAGS = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Os -I$(INCLUDE_AVR) -I$(INCLUDE_HOT_WHEELS) -I$(INCLUDE_THE_DISTANCE) -I$(INCLUDE_DUINO_EYES)
+CFLAGS = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Os -I$(INCLUDE_AVR) -I$(INCLUDE_IR_DRIVER) -I$(INCLUDE_HOT_WHEELS) -I$(INCLUDE_THE_DISTANCE) -I$(INCLUDE_DUINO_EYES) -I$(INCLUDE_NEC_DECODER) -I$(INCLUDE_UART)
 LDFLAGS = -mmcu=$(MCU)
 
 # Output directory

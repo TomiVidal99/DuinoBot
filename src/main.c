@@ -29,9 +29,9 @@
 #include "../lib/theDistance/theDistance.h"
 
 // dependencias para AVR_NECdecoder
-// #include "../lib/AVR_NECdecoder/AVR_NECdecoder.h"
-// #include "../lib/util/delay.h"
-// #include "../lib/avr/interrupt.h"
+#include "../lib/avr-ir-necdecoder/AVR_NECdecoder.h"
+#include "../lib/util/delay.h"
+#include "../lib/avr/interrupt.h"
 
 // dependencias para el seguidor de linea DuinoEye
 #include "../lib/DuinoEyes/duinoEyes.h"
@@ -39,9 +39,9 @@
 void isEnteringLine();
 
 // definiciones para el uso de AVR_NECdecoder
-// char buffer[30] = {};
-// volatile NEC_data_t testNEC;
-// volatile uint8_t currentCommand = CMD_BUTTON_0;
+char buffer[30] = {};
+volatile NEC_data_t testNEC;
+volatile uint8_t currentCommand = CMD_BUTTON_0;
 uint8_t distance = 0;
 uint8_t isFollowingLine = 0;
 eyeState_t currEyesState = {0, 0};
@@ -52,9 +52,9 @@ int main(void)
     initDuinoEyes();
     onYourMarks(); // se inicializan los motores
 
-    // NECdecoderSetUp();
-    // IRDriver_Init(&DDRD, &PORTD, 2);
-    // sei();
+    NECdecoderSetUp();
+    IRDriver_Init(&DDRD, &PORTD, 2);
+    sei();
 
     while (1)
     {
@@ -64,10 +64,10 @@ int main(void)
         currEyesState = checkDuinoEyes(); // se leen los sensores IR
         isEnteringLine();                 // actualizo si se está siguiendo una línea o no
 
-        // while (currentCommand == CMD_BUTTON_1)
-        // {
-        //     _delay_ms(10);
-        // }
+        while (currentCommand == CMD_BUTTON_1)
+        {
+            _delay_ms(10);
+        }
 
         while (isFollowingLine > 0)
         {
@@ -118,13 +118,13 @@ void isEnteringLine()
     }
 }
 
-// ISR(INT0_vect)
-// {
-//     NECdecoder(&testNEC);
-// }
+ISR(INT0_vect)
+{
+    NECdecoder(&testNEC);
+}
 
-// ISR(TIMER1_OVF_vect)
-// {
-//     currentCommand = testNEC.preciseData.command;
-//     go2sleepDecoder();
-// }
+ISR(TIMER1_OVF_vect)
+{
+    currentCommand = testNEC.preciseData.command;
+    go2sleepDecoder();
+}

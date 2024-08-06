@@ -9,6 +9,7 @@
         "uart.h": "c",
         "stdio.h": "c",
         "duinoeyes.h": "c",
-        "avr_necdecoder.h": "c"
+        "avr_necdecoder.h": "c",
+        "sensorinfrarrojo.h": "c"
     }
 }

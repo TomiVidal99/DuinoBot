@@ -21,10 +21,11 @@ INCLUDE_THE_DISTANCE = lib/theDistance/**/*
 INCLUDE_DUINO_EYES = lib/DuinoEyes/**/*
 INCLUDE_NEC_DECODER = lib/avr-ir-necdecoder/**/*
 INCLUDE_UART = lib/UART/**/*
+INCLUDE_SENSOR_INFRAROJO = lib/sensor-infrarojo/**/*
 
 # Compiler and linker flags
 # Considerar: -Werror -Wfatal-errors -Wall -Wextra
-CFLAGS = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Os -I$(INCLUDE_AVR) -I$(INCLUDE_IR_DRIVER) -I$(INCLUDE_HOT_WHEELS) -I$(INCLUDE_THE_DISTANCE) -I$(INCLUDE_DUINO_EYES) -I$(INCLUDE_NEC_DECODER) -I$(INCLUDE_UART)
+CFLAGS = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Os -I$(INCLUDE_AVR) -I$(INCLUDE_IR_DRIVER) -I$(INCLUDE_HOT_WHEELS) -I$(INCLUDE_THE_DISTANCE) -I$(INCLUDE_DUINO_EYES) -I$(INCLUDE_NEC_DECODER) -I$(INCLUDE_UART) -I$(INCLUDE_SENSOR_INFRAROJO)
 LDFLAGS = -mmcu=$(MCU)
 
 # Output directory

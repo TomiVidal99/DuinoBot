@@ -1,6 +1,8 @@
 # Control de DuinoBot
 Se hizo un algoritmo de control del robot _DuinoBot v2.3_ a partir de las librerías provistas por los alumnos de ingeniería electrónica de la UNLP
 
+# TODO: explicar que pasa si se quiere cambiar de micro
+
 # TODO: agregar contribuidores
 # TODO: links al robot
 # TODO: imagen del robot

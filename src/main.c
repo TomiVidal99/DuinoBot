@@ -6,24 +6,11 @@
 // definiciones de los registros
 #include "../lib/avr/io.h"
 
-<<<<<<< HEAD
-=======
-// valor que dispara cuando se detecta una línea
-#define DETECTION_THRESHOLD 150
-
-#include <stdio.h>
-#include <stdint.h>
-
-// definiciones de los registros
-#include "../lib/avr/io.h"
-
->>>>>>> ddb0af5daa53d261e88d65bdedbd4fc11b8c5faa
 #include "../lib/HotWheels/HotWheels.h"
 
 #include "../lib/theDistance/theDistance.h"
 
 // dependencias para AVR_NECdecoder
-<<<<<<< HEAD
 #include "../lib/avr-ir-necdecoder/AVR_NECdecoder.h"
 #include "../lib/util/delay.h"
 #include "../lib/avr/interrupt.h"
@@ -32,19 +19,10 @@
 #include "../lib/sensor-infrarojo/sensorInfrarrojo.h"
 // #include "../lib/DuinoEyes/duinoEyes.h"
 // #include "../lib/DuinoEyes/duinoStateMachine.h"
-=======
-// #include "../lib/AVR_NECdecoder/AVR_NECdecoder.h"
-// #include "../lib/util/delay.h"
-// #include "../lib/avr/interrupt.h"
-
-// dependencias para el seguidor de linea DuinoEye
-#include "../lib/DuinoEyes/duinoEyes.h"
->>>>>>> ddb0af5daa53d261e88d65bdedbd4fc11b8c5faa
 
 void isEnteringLine();
 
 // definiciones para el uso de AVR_NECdecoder
-<<<<<<< HEAD
 char buffer[30] = {};
 volatile NEC_data_t testNEC;
 volatile uint8_t currentCommand = CMD_BUTTON_0;
@@ -70,30 +48,11 @@ int main(void)
     NECdecoderSetUp();
     IRDriver_Init(&DDRD, &PORTD, 2);
     sei();
-=======
-// char buffer[30] = {};
-// volatile NEC_data_t testNEC;
-// volatile uint8_t currentCommand = CMD_BUTTON_0;
-uint8_t distance = 0;
-uint8_t isFollowingLine = 0;
-eyeState_t currEyesState = {0, 0};
-eyeState_t prevEyesState = {0, 0};
-
-int main(void)
-{
-    initDuinoEyes();
-    onYourMarks(); // se inicializan los motores
-
-    // NECdecoderSetUp();
-    // IRDriver_Init(&DDRD, &PORTD, 2);
-    // sei();
->>>>>>> ddb0af5daa53d261e88d65bdedbd4fc11b8c5faa
 
     while (1)
     {
         // distance = quickDistance(); // se lee la distancia al proximo obstaculo
 
-<<<<<<< HEAD
         // prevEyesState = currEyesState;
         // currEyesState = checkDuinoEyes(); // se leen los sensores IR
         prevLineState = currLineState;
@@ -136,21 +95,6 @@ int main(void)
                 isFollowingLine = 0;
                 break;
             }
-=======
-        distance = quickDistance(); // se lee la distancia al proximo obstaculo
-        prevEyesState = currEyesState;
-        currEyesState = checkDuinoEyes(); // se leen los sensores IR
-        isEnteringLine();                 // actualizo si se está siguiendo una línea o no
-
-        // while (currentCommand == CMD_BUTTON_1)
-        // {
-        //     _delay_ms(10);
-        // }
-
-        while (isFollowingLine > 0)
-        {
-            softStop();
->>>>>>> ddb0af5daa53d261e88d65bdedbd4fc11b8c5faa
         }
 
         if (distance > MAX_DISTANCE)
@@ -180,7 +124,6 @@ int main(void)
     return 0;
 }
 
-<<<<<<< HEAD
 void isEnteringLine()
 {
     if (prevLineState.left == 0 && currLineState.left != 0) {
@@ -205,32 +148,3 @@ ISR(TIMER1_OVF_vect)
     currentCommand = testNEC.preciseData.command;
     go2sleepDecoder();
 }
-=======
-/* Se retorna 0 si está 'entrando' a una línea. 0 caso contrario */
-void isEnteringLine()
-{
-    if (currEyesState.isLeftEyeDetecting > DETECTION_THRESHOLD &&
-        prevEyesState.isLeftEyeDetecting < DETECTION_THRESHOLD)
-    {
-        isFollowingLine = 0;
-        return;
-    }
-    if (currEyesState.isRightEyeDetecting > DETECTION_THRESHOLD &&
-        prevEyesState.isRightEyeDetecting < DETECTION_THRESHOLD)
-    {
-        isFollowingLine = 0;
-        return;
-    }
-}
-
-// ISR(INT0_vect)
-// {
-//     NECdecoder(&testNEC);
-// }
-
-// ISR(TIMER1_OVF_vect)
-// {
-//     currentCommand = testNEC.preciseData.command;
-//     go2sleepDecoder();
-// }
->>>>>>> ddb0af5daa53d261e88d65bdedbd4fc11b8c5faa

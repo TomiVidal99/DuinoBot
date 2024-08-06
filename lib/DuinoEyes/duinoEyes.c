@@ -17,11 +17,7 @@
  */
 
 #include "duinoEyes.h"
-<<<<<<< HEAD
 #include "../IRDriver/IRDriver.h"
-=======
-#include "IRDriver.h"
->>>>>>> ddb0af5daa53d261e88d65bdedbd4fc11b8c5faa
 #include <stdint.h>
 
 /* =======================================================================

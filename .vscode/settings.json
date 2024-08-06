@@ -8,12 +8,8 @@
         "stdint.h": "c",
         "uart.h": "c",
         "stdio.h": "c",
-<<<<<<< HEAD
         "duinoeyes.h": "c",
         "avr_necdecoder.h": "c",
         "sensorinfrarrojo.h": "c"
-=======
-        "duinoeyes.h": "c"
->>>>>>> ddb0af5daa53d261e88d65bdedbd4fc11b8c5faa
     }
 }

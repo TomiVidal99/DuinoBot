@@ -1,12 +1,10 @@
 # Control de DuinoBot
 Se hizo un algoritmo de control del robot _DuinoBot v2.3_ a partir de las librerías provistas por los alumnos de ingeniería electrónica de la UNLP
 
-# TODO: explicar que pasa si se quiere cambiar de micro
+![Robot](robot.jpeg)
+![Placa](placa.png)
 
-# TODO: agregar contribuidores
-# TODO: links al robot
-# TODO: imagen del robot
-# TODO: imagen del control
+[Robot funcionando](video.mp4)
 
 ## Instalación
 ## Cómo compilar main.hex?
@@ -22,9 +20,11 @@ Se intentó incluir todas las dependencias en el proyecto, para que no haya nece
 - make (para poder compilar con el archivo Makefile)
 - avr-gcc (compilador para que haya intellisense en vscode y para poder compilar el .hex que se va a flashear en el micro)
 El resto de dependencias están contenidas dentro del proyecto.
+### ¿Qué pasa si se cambia de microcontrolador?
+Se deben hacer los cambios acordes en el archivo Makefile (MCU = atmega1284p).
 
 ### Algunos problemas que pueden ocurrir
-- La primera vez quizás tengas que configurar donde se encuentra _avr-gcc.exe_ en vscode, hay que ir a `.vscode/c_cpp_properties.json` y cambiar `compilerPath` acordemente.
+- La primera vez quizás tengas que configurar donde se encuentra _avr-gcc.exe_ en vscode, hay que ir a `.vscode/c_cpp_properties.json` y cambiar `compilerPath` acordemente. También hay que configurar _avr-gcc.exe_ en Makefile a la ruta correcta.
 
 ## Contribuidores
 - Tomás Vidal

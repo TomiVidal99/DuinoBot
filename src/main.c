@@ -99,6 +99,7 @@ int main(void)
             }
         }
 
+        // modo 'libre', no se choca
         if (distance > MAX_DISTANCE)
         {
             straightForward(MAX_MOTOR_POWER);
@@ -148,11 +149,13 @@ void updateLineSensors()
     currLineState.right = IR_adc_detect(3) < DETECTION_THRESHOLD;
 }
 
+// interrupción para el control remoto
 ISR(INT0_vect)
 {
     NECdecoder(&testNEC);
 }
 
+// interrupción para decodificar comando del control remoto
 ISR(TIMER1_OVF_vect)
 {
     currentCommand = testNEC.preciseData.command;

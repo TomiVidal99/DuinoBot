@@ -73,12 +73,14 @@ int main(void)
             // esta es la lógica de control seguidor de línea
             if (currLineState.left == 1 && currLineState.right == 0)
             {
-                axisRTurn(100);
+                // si se detecta la izquierda pero la derecha no, rotar a la izquierda
+                axisLTurn(100);
                 _delay_ms(100);
             }
             else if (currLineState.right == 1 && currLineState.right == 0)
             {
-                axisLTurn(100);
+                // si se detecta la derecha pero la izquierda no, rotar a la derecha
+                axisRTurn(100);
                 _delay_ms(100);
             }
             else

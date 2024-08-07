@@ -68,7 +68,9 @@ int main(void)
         // acá podría ir un modo de control más avanzado
         while (isFollowingLine > 0)
         {
-            PORTB |= (1 << PB7);
+            PORTB |= (1 << PB7); // se enciende el LED indicando el modo seguidor
+
+            // esta es la lógica de control seguidor de línea
             if (currLineState.left == 1 && currLineState.right == 0)
             {
                 axisRTurn(100);
@@ -89,6 +91,8 @@ int main(void)
             // botón para salir de modo seguidor de línea
             if (currentCommand == CMD_BUTTON_0)
             {
+                isFollowingLine = 0;
+                PORTB |= (1 << PB7); // apaga el LED indicador
                 break;
             }
         }

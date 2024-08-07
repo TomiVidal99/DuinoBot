@@ -17,10 +17,9 @@
 
 // dependencias para el seguidor de linea DuinoEye
 #include "../lib/sensor-infrarojo/sensorInfrarrojo.h"
-// #include "../lib/DuinoEyes/duinoEyes.h"
-// #include "../lib/DuinoEyes/duinoStateMachine.h"
 
 void isEnteringLine();
+void updateLineSensors();
 
 // definiciones para el uso de AVR_NECdecoder
 char buffer[30] = {};
@@ -28,10 +27,12 @@ volatile NEC_data_t testNEC;
 volatile uint8_t currentCommand = CMD_BUTTON_0;
 uint8_t distance = 0;
 uint8_t isFollowingLine = 0;
-// eyeState_t currEyesState = {0, 0};
-// eyeState_t prevEyesState = {0, 0};
 
-typedef struct {
+// lineStates_t:
+// 0 -> detectó blanco
+// 1 -> detectó negro
+typedef struct
+{
     uint8_t left;
     uint8_t right;
 } lineStates_t;
@@ -51,48 +52,43 @@ int main(void)
 
     while (1)
     {
-        // distance = quickDistance(); // se lee la distancia al proximo obstaculo
+        distance = quickDistance(); // se lee la distancia al proximo obstaculo
 
-        // prevEyesState = currEyesState;
-        // currEyesState = checkDuinoEyes(); // se leen los sensores IR
         prevLineState = currLineState;
-        currLineState.left = IR_adc_detect(2) < DETECTION_THRESHOLD;
-        currLineState.right = IR_adc_detect(3) < DETECTION_THRESHOLD;
+        updateLineSensors();
 
-        // if (IR_adc_detect(3) < DETECTION_THRESHOLD || IR_adc_detect(2) < DETECTION_THRESHOLD) {
-        //     straightForward(100);
-        //     _delay_ms(50);
-        // } else {
-        //     softStop();
-        // }
-        // _delay_ms(20);
-
-        isEnteringLine();                 // actualizo si se está siguiendo una línea o no
+        isEnteringLine(); // actualizo si se está siguiendo una línea o no
 
         while (currentCommand == CMD_BUTTON_1)
         {
             _delay_ms(10);
         }
 
-        isFollowingLine = 0;
+        // entró a modo seguidor de línea
+        // acá podría ir un modo de control más avanzado
         while (isFollowingLine > 0)
         {
-            PORTB |= (1<<PB7);
-            if (currLineState.left == 1 && currLineState.right == 0) {
+            PORTB |= (1 << PB7);
+            if (currLineState.left == 1 && currLineState.right == 0)
+            {
                 axisRTurn(100);
                 _delay_ms(100);
-            } else if (currLineState.right == 1 && currLineState.right == 0) {
+            }
+            else if (currLineState.right == 1 && currLineState.right == 0)
+            {
                 axisLTurn(100);
                 _delay_ms(100);
-            } else {
+            }
+            else
+            {
                 straightForward(100);
                 _delay_ms(300);
             }
-            currLineState.left = IR_adc_detect(2) < DETECTION_THRESHOLD;
-            currLineState.right = IR_adc_detect(3) < DETECTION_THRESHOLD;
+            updateLineSensors();
 
-            if (currLineState.left == 0 && currLineState.right == 0) {
-                isFollowingLine = 0;
+            // botón para salir de modo seguidor de línea
+            if (currentCommand == CMD_BUTTON_0)
+            {
                 break;
             }
         }
@@ -124,18 +120,26 @@ int main(void)
     return 0;
 }
 
+// se corrobora si se encontró una línea
 void isEnteringLine()
 {
-    if (prevLineState.left == 0 && currLineState.left != 0) {
+    if (prevLineState.left == 0 && currLineState.left != 0)
+    {
         isFollowingLine = 1;
         return;
     }
-    if (prevLineState.right == 0 && currLineState.right != 0) {
+    if (prevLineState.right == 0 && currLineState.right != 0)
+    {
         isFollowingLine = 1;
         return;
     }
-    // isFollowingLine = (prevLineState.left == 0 && currLineState.left != 0) ||
-    // (prevLineState.right == 0 && currLineState.right != 0);
+}
+
+// se actualizan los estados de los sensores
+void updateLineSensors()
+{
+    currLineState.left = IR_adc_detect(2) < DETECTION_THRESHOLD;
+    currLineState.right = IR_adc_detect(3) < DETECTION_THRESHOLD;
 }
 
 ISR(INT0_vect)

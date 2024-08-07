@@ -28,3 +28,4 @@ Se deben hacer los cambios acordes en el archivo Makefile (MCU = atmega1284p).
 
 ## Contribuidores
 - Tomás Vidal
+- Bruno Benítez
